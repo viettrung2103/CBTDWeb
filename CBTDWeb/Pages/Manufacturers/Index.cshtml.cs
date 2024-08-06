@@ -3,26 +3,21 @@ using Infrastructure.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 
-namespace CBTDWeb.Pages.Categories
+namespace CBTDWeb.Pages.Manufacturers
 {
     public class IndexModel : PageModel
     {
-        // to use the database in a webpage, we need to inject as dependency
-        //1. create a db object
-        //2. create a list of items
-        //the readonly mean
         private readonly ApplicationDbContext _db;  //local instance of the database service
 
-        public List<Category> objCategoryList;  //our UI front end will support looping through and displaying Categories retrieved from the database and stored in a List
+        public List<Manufacturer> objManufacturerList;  //our UI front end will support looping through and displaying Categories retrieved from the database and stored in a List
 
         public IndexModel(ApplicationDbContext db)  //dependency injection of the database service
         {
             _db = db;
-            objCategoryList = new List<Category>();
+            objManufacturerList = new List<Manufacturer>();
         }
 
         public IActionResult OnGet()
-            //can be called ViewResult
         /*Here are some common implementations of IActionResult:
 		ViewResult: Represents a view result, which renders a view to generate an HTML response to the client.
 		JsonResult: Represents a JSON result, which serializes data into JSON format and sends it to the client.
@@ -32,7 +27,7 @@ namespace CBTDWeb.Pages.Categories
 		*/
 
         {
-            objCategoryList = _db.Categories.ToList();
+            objManufacturerList = _db.Manufacturers.ToList();
             return Page();
         }
 

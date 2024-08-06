@@ -32,23 +32,48 @@ namespace DataAccess.DbInitializer
 
             }
 
-            if (_db.Categories.Any())
+            //if (_db.Categories.Any())
+            //{
+            //    return; //DB has been seeded, or the Categories tables is already existed
+            //}
+
+            if (_db.Categories.Any() == false)
             {
-                return; //DB has been seeded, or the Categories tables is already existed
+                var Categories = new List<Category>
+                {
+
+                new Category { Name = "Non-Alcoholic Beverages", DisplayOrder = 1 },
+                new Category { Name = "Wine", DisplayOrder = 2 },
+                new Category { Name = "Snacks", DisplayOrder = 3 }
+                };
+                foreach (var c in Categories)
+                {
+                    _db.Categories.Add(c);
+                }
             }
 
-            var Categories = new List<Category>
+            if (_db.Manufacturers.Any() == false)
             {
-
-            new Category { Name = "Non-Alcoholic Beverages", DisplayOrder = 1 },
-            new Category { Name = "Wine", DisplayOrder = 2 },
-            new Category { Name = "Snacks", DisplayOrder = 3 }
-            };
-
-            foreach (var c in Categories)
-            {
-                _db.Categories.Add(c);
+                var Manufacturers = new List<Manufacturer>
+                {
+                    new Manufacturer {Name = "CocaCola"},
+                    new Manufacturer {Name = "Budweiser"}
+                };
+                foreach (var c in Manufacturers)
+                {
+                    _db.Manufacturers.Add(c);
+                }
             }
+
+
+            // add Manufactor
+
+
+            // add Product
+
+
+
+            
             _db.SaveChanges();
         }
     }
