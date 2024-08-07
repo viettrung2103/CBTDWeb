@@ -11,13 +11,13 @@ namespace CBTDWeb.Pages.Categories
         //1. create a db object
         //2. create a list of items
         //the readonly mean
-        private readonly ApplicationDbContext _db;  //local instance of the database service
+        private readonly UnitOfWork _UnitOfWork;  //local instance of the database service
 
         public List<Category> objCategoryList;  //our UI front end will support looping through and displaying Categories retrieved from the database and stored in a List
 
-        public IndexModel(ApplicationDbContext db)  //dependency injection of the database service
+        public IndexModel(UnitOfWork unitOfWork)  //dependency injection of the database service
         {
-            _db = db;
+            _UnitOfWork = unitOfWork;
             objCategoryList = new List<Category>();
         }
 
@@ -32,7 +32,8 @@ namespace CBTDWeb.Pages.Categories
 		*/
 
         {
-            objCategoryList = _db.Categories.ToList();
+            // now just need to work with the model object in C#, not the actual model/ table in the database
+            objCategoryList = _UnitOfWork.Category.GetAll().ToList();
             return Page();
         }
 
