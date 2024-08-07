@@ -23,6 +23,8 @@ builder.Services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.Requ
 
 //initialize the database service
 builder.Services.AddScoped<DbInitializer>();
+
+builder.Services.AddScoped<UnitOfWork>();
 //4. Enhance html with adding C# function
 builder.Services.AddRazorPages();
 
