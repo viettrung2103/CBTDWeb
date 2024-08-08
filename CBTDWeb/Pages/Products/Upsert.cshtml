@@ -34,6 +34,7 @@
                     </div>
                     <div class="mb-3">
                         <label class="ms-2">Category</label>
+                        <!-- model is the variable that is used to save/ be saved to the populated list inside the Model.Category List-->
                         @Html.DropDownListFor(model =>
                                  model.objProduct.CategoryId,
                                  Model.CategoryList,
@@ -94,7 +95,9 @@
                         <div class="col-4">
 
                             <div class="mt-1 form-text">Current picture</div>
-
+                            <!--
+                                be careful with the src tag
+                            -->
                             <img class="img-thumbnail" src="@Model.objProduct.ImageUrl" />
 
                         </div>

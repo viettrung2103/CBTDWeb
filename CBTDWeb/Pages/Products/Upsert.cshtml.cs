@@ -31,6 +31,7 @@ namespace CBTDWeb.Pages.Products
                     Text = c.Name,
                     Value = c.Id.ToString()
                 }
+                // the result of the Select querry is saved in c parameter, which is initiated as a new List item
                 );
             ManufacturerList = _unitOfWork.Manufacturer.GetAll()
                 .Select(m => new SelectListItem
