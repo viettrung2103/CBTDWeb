@@ -82,15 +82,25 @@
                 </div>
                 <div class="mb-3">
 
+                   
+
+
                     @if (Model.objProduct.ImageUrl != null)
+
                     {
-                        <input class="visually-hidden" type="hidden" asp-for="objProduct.ImageUrl" />
+
+                        <input class="visually-hidden" type="hidden" asp-for="@Model.objProduct.ImageUrl" />
+
                         <div class="col-4">
+
                             <div class="mt-1 form-text">Current picture</div>
-                            <img class="img-thumbnail" src="/@(Model.objProduct.ImageUrl)" />
+
+                            <img class="img-thumbnail" src="@Model.objProduct.ImageUrl" />
+
                         </div>
 
                     }
+
 
                 </div>
             </div>
