@@ -26,9 +26,10 @@ builder.Services.AddDatabaseDeveloperPageExceptionFilter();
 //builder.Services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
 //    .AddEntityFrameworkStores<ApplicationDbContext>();
 
+//builder.Services.AddIdentity<IdentityUser, IdentityRole>().AddDefaultTokenProviders()
+//    .AddEntityFrameworkStores<ApplicationDbContext>().AddDefaultTokenProviders();
 builder.Services.AddIdentity<IdentityUser, IdentityRole>().AddDefaultTokenProviders()
-    .AddEntityFrameworkStores<ApplicationDbContext>().AddDefaultTokenProviders();
-
+	.AddEntityFrameworkStores<ApplicationDbContext>();
 
 //initialize the database service
 builder.Services.AddScoped<DbInitializer>();
