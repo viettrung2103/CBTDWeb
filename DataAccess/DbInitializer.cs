@@ -71,7 +71,7 @@ namespace DataAccess.DbInitializer
             
             _userManager.CreateAsync(new ApplicationUser
             {
-                UserName = "admin",
+                UserName = "viettrung21.c@gmail.com",
                 Email = "viettrung21.c@gmail.com",
                 FirstName = "Trung",
                 LastName = "Doan",
