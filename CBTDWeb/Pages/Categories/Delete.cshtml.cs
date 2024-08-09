@@ -36,7 +36,8 @@ namespace CBTDWeb.Pages.Categories
             //assuming I'm in create mode
             return Page();
         }
-        public IActionResult OnPost()
+        public IActionResult onPost()
+            
         {
             if (!ModelState.IsValid)
             {
