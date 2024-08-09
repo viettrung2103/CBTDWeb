@@ -6,8 +6,9 @@ using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-//install with Nuget package
 using Microsoft.AspNetCore.Identity;
+//install with Nuget package
+
 
 
 namespace Infrastructure.Models
