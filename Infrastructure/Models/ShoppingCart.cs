@@ -30,6 +30,9 @@ namespace Infrastructure.Models
         // the [ValidateNever] means there is validation from the server, this field is ignored
         // the purpose when formed is submited, these two field will not be checked. Does the validation happening on the server-side or browser side?
         // I think we can control the validation on browser-side
+        [NotMapped]
+        public double CartPrice { get; set; }
+
     }
 
 }
