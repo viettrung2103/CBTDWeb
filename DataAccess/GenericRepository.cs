@@ -41,7 +41,7 @@ namespace DataAccess
         public virtual T Get(Expression<Func<T, bool>> predicate, bool trackChanges = false, string? includes = null)
         {
             IQueryable<T> queryable = _dbContext.Set<T>();
-            
+
             // if there are tables can be joined in this table (via pk and fk), will join these table
             if (!string.IsNullOrEmpty(includes)) // If other objects to include (join)
             {

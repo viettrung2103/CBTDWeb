@@ -10,6 +10,7 @@ namespace Infrastructure.Interfaces
       
         public IGenericRepository<Product> Product { get; }
         public IGenericRepository<ApplicationUser> ApplicationUser { get; }
+        public IGenericRepository<ShoppingCart> ShoppingCart { get; }
 
 
         //save changes to the data source
