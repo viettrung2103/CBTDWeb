@@ -116,7 +116,8 @@ namespace CBTDWeb.Pages.Cart
 					PriceData = new SessionLineItemPriceDataOptions
 					{
 						UnitAmount = (long)(item.CartPrice * 100),//20.00 -> 2000
-						Currency = "usd",
+						//Currency = "usd",
+						Currency = "eur",
 
 						ProductData = new SessionLineItemPriceDataProductDataOptions
 						{
