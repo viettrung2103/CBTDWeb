@@ -50,7 +50,7 @@ namespace CBTDWeb.Pages.Cart
             };
             foreach (var item in ShoppingCartVM.cartItems)
             {
-                item.CartPrice = GetPriceBasedOnQuantity(item.Count, item.Product.UnitPrice, item.Product.HalfDozenPrice, item.Product.DozenPrice);
+                item.CartPrice = ShoppingCartVM.GetPriceBasedOnQuantity(item.Count, item.Product.UnitPrice, item.Product.HalfDozenPrice, item.Product.DozenPrice);
                 ShoppingCartVM.CartTotal += (item.CartPrice * item.Count);
 
             }
@@ -60,21 +60,7 @@ namespace CBTDWeb.Pages.Cart
             return Page();
         }
 
-        static double GetPriceBasedOnQuantity(double quantity, double unitPrice, double priceHalfDozen, double priceDozen)
-        {
-            if (quantity <= 5)
-            {
-                return unitPrice;
-            }
-            else
-            {
-                if (quantity <= 11)
-                {
-                    return priceHalfDozen;
-                }
-                return priceDozen;
-            }
-        }
+
 
         public IActionResult OnPostMinus(int cartId)
         {

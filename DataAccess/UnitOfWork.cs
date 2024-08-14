@@ -19,6 +19,9 @@ public class UnitOfWork : IUnitOfWork
     private IGenericRepository<Product> _Product;
     private IGenericRepository<ApplicationUser> _ApplicationUser;
     private IGenericRepository<ShoppingCart> _ShoppingCart;
+    private IGenericRepository<OrderDetails> _OrderDetails;
+
+    private IOrderHeaderRepository<OrderHeader> _OrderHeader;
 
     public IGenericRepository<Category> Category
     {
@@ -89,6 +92,36 @@ public class UnitOfWork : IUnitOfWork
             return _ShoppingCart;
         }
     }
+
+    public IGenericRepository<OrderDetails> OrderDetails
+    {
+        get
+        {
+
+            if (_OrderDetails == null)
+            {
+                _OrderDetails = new GenericRepository<OrderDetails>(_dbContext);
+            }
+
+            return _OrderDetails;
+        }
+    }
+
+    public IOrderHeaderRepository<OrderHeader> OrderHeader
+    {
+        get
+        {
+
+            if (_OrderHeader == null)
+            {
+                _OrderHeader = new OrderHeaderRepository(_dbContext);
+            }
+
+            return _OrderHeader;
+        }
+    }
+
+  
 
     //ADD ADDITIONAL METHODS FOR EACH MODEL HERE
 
