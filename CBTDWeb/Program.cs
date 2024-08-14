@@ -3,28 +3,49 @@ using DataAccess.DbInitializer;
 
 // using DataAcess
 using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.EntityFrameworkCore;
+using Utility;
 
 //convert a console app to web application
 var builder = WebApplication.CreateBuilder(args);
 
+//meaning of these service
 
 // Add services to the container.
 // building pipeline from backend to the front end
 var connectionString = builder.Configuration.GetConnectionString("DefaultConnection") ?? throw new InvalidOperationException("Connection string 'DefaultConnection' not found.");
 // 1. create a dataservice and pipeline, dbcontext, create connection to the database
+// this part is changed when change database type
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
     options.UseSqlServer(connectionString)); // use sql server
 //2. in case user cannot create, display error to user
 builder.Services.AddDatabaseDeveloperPageExceptionFilter();
 //3. Permissino
-builder.Services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
-    .AddEntityFrameworkStores<ApplicationDbContext>();
+//remove the default identity
+//builder.Services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
+//    .AddEntityFrameworkStores<ApplicationDbContext>();
+
+//builder.Services.AddIdentity<IdentityUser, IdentityRole>().AddDefaultTokenProviders()
+//    .AddEntityFrameworkStores<ApplicationDbContext>().AddDefaultTokenProviders();
+builder.Services.AddIdentity<IdentityUser, IdentityRole>().AddDefaultTokenProviders()
+	.AddEntityFrameworkStores<ApplicationDbContext>();
 
 //initialize the database service
 builder.Services.AddScoped<DbInitializer>();
 
 builder.Services.AddScoped<UnitOfWork>();
+
+
+builder.Services.ConfigureApplicationCookie(options =>
+{
+    options.LoginPath = $"/Identity/Account/Login";
+    options.LogoutPath = $"/Identity/Account/Logout";
+    options.AccessDeniedPath = $"/Identity/Account/AccessDenied";
+});
+
+builder.Services.AddSingleton<IEmailSender, EmailSender>();
+
 //4. Enhance html with adding C# function
 builder.Services.AddRazorPages();
 

@@ -17,8 +17,10 @@ public class UnitOfWork : IUnitOfWork
     private IGenericRepository<Category> _Category;
     private IGenericRepository<Manufacturer> _Manufacturer;
     private IGenericRepository<Product> _Product;
+    private IGenericRepository<ApplicationUser> _ApplicationUser;
+    private IGenericRepository<ShoppingCart> _ShoppingCart;
 
-    public IGenericRepository<Category> Category 
+    public IGenericRepository<Category> Category
     {
         get
         {
@@ -57,6 +59,34 @@ public class UnitOfWork : IUnitOfWork
             }
 
             return _Product;
+        }
+    }
+    //Constructor
+    public IGenericRepository<ApplicationUser> ApplicationUser
+    {
+        get
+        {
+
+            if (_ApplicationUser == null)
+            {
+                _ApplicationUser = new GenericRepository<ApplicationUser>(_dbContext);
+            }
+
+            return _ApplicationUser;
+        }
+    }
+
+    public IGenericRepository<ShoppingCart> ShoppingCart
+    {
+        get
+        {
+
+            if (_ShoppingCart == null)
+            {
+                _ShoppingCart = new GenericRepository<ShoppingCart>(_dbContext);
+            }
+
+            return _ShoppingCart;
         }
     }
 

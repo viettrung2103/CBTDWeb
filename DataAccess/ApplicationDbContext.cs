@@ -10,10 +10,13 @@ namespace DataAccess
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
             : base(options)
         {
-    }
-            public DbSet<Category> Categories { get; set; }  //the physical DB table will be named Categories, while "Category" is the name that will be used in code
-            public DbSet<Manufacturer> Manufacturers { get; set; }
+        }
+        public DbSet<Category> Categories { get; set; }  //the physical DB table will be named Categories, while "Category" is the name that will be used in code
+        public DbSet<Manufacturer> Manufacturers { get; set; }
 
-            public DbSet<Product> Products { get; set; }
+        public DbSet<Product> Products { get; set; }
+        public DbSet<ApplicationUser> ApplicationUsers { get; set; }
+        public DbSet<ShoppingCart> ShoppingCarts { get; set; }
+
     }
 }

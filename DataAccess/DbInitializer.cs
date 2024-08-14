@@ -1,17 +1,26 @@
 ﻿using Infrastructure.Interfaces;
 using Infrastructure.Models;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using Utility;
 
 
 namespace DataAccess.DbInitializer
 {
-    public class DbInitializer : IDbInitializer
+    public class DbInitializer
     {
         private readonly ApplicationDbContext _db;
+        private readonly UserManager<IdentityUser> _userManager;
+        private readonly RoleManager<IdentityRole> _roleManager;
 
-        public DbInitializer(ApplicationDbContext db)
+        //create a depency injection
+        //db, userManager, RolerManager are 3 services that are inject this class
+        // DbInitialize is in charged of seeding
+        public DbInitializer(ApplicationDbContext db, UserManager<IdentityUser> userManager, RoleManager<IdentityRole> roleManager)
         {
             _db = db;
+            _userManager = userManager;
+            _roleManager = roleManager;
         }
 
 
@@ -32,10 +41,53 @@ namespace DataAccess.DbInitializer
 
             }
 
+            //check to see if one table has data.  If so, do not insert any data
             if (_db.Categories.Any())
             {
                 return; //DB has been seeded
             }
+
+            //create roles if they are not created
+            //SD is a “Static Details” class we will create in Utility to hold constant strings for Roles
+
+            _roleManager.CreateAsync(new IdentityRole(SD.AdminRole)).GetAwaiter().GetResult();
+            _roleManager.CreateAsync(new IdentityRole(SD.ShipperRole)).GetAwaiter().GetResult();
+            _roleManager.CreateAsync(new IdentityRole(SD.CustomerRole)).GetAwaiter().GetResult();
+
+            //Create at least one "Super Admin" or “Admin”.  Repeat the process for other users you want to seed
+
+            //_userManager.CreateAsync(new ApplicationUser
+            //{
+            //    UserName = "rfry@weber.edu",
+            //    Email = "rfry@weber.edu",
+            //    FirstName = "Richard",
+            //    LastName = "Fry",
+            //    PhoneNumber = "8015556919",
+            //    StreetAddress = "123 Main Street",
+            //    State = "UT",
+            //    PostalCode = "84408",
+            //    City = "Ogden"
+            //}, "Admin123*").GetAwaiter().GetResult();     
+            
+            _userManager.CreateAsync(new ApplicationUser
+            {
+                UserName = "viettrung21.c@gmail.com",
+                Email = "viettrung21.c@gmail.com",
+                FirstName = "Trung",
+                LastName = "Doan",
+                PhoneNumber = "8015556919",
+                StreetAddress = "123 Main Street",
+                State = "UT",
+                PostalCode = "84408",
+                City = "Ogden"
+            }, "Admin123*").GetAwaiter().GetResult();
+
+            ApplicationUser user = _db.ApplicationUsers.FirstOrDefault(u => u.Email == "viettrung21.c@gmail.com");
+
+            _userManager.AddToRoleAsync(user, SD.AdminRole).GetAwaiter().GetResult();
+
+
+
 
             var Categories = new List<Category>
  {
