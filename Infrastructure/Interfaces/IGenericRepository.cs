@@ -55,8 +55,7 @@ namespace Infrastructure.Interfaces
         // Update all changes to an object
         void Update(T entity);
 
-        int IncrementCount(ShoppingCart shoppingCart, int count);
-        int DecrementCount(ShoppingCart shoppingCart, int count);
+
 
     }
 }

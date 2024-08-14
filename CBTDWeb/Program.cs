@@ -1,10 +1,11 @@
-using DataAccess;
+ using DataAccess;
 using DataAccess.DbInitializer;
 
 // using DataAcess
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.EntityFrameworkCore;
+using Stripe;
 using Utility;
 
 //convert a console app to web application
@@ -44,7 +45,13 @@ builder.Services.ConfigureApplicationCookie(options =>
     options.AccessDeniedPath = $"/Identity/Account/AccessDenied";
 });
 
+
+
+
 builder.Services.AddSingleton<IEmailSender, EmailSender>();
+
+builder.Services.Configure<StripeSettings>(builder.Configuration.GetSection("Stripe"));
+StripeConfiguration.ApiKey = builder.Configuration.GetSection("Stripe:SecretKey").Get<string>();
 
 //4. Enhance html with adding C# function
 builder.Services.AddRazorPages();
