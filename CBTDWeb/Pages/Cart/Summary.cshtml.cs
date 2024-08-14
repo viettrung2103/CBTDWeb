@@ -3,6 +3,7 @@ using CBTDWeb.ViewModels;
 using Infrastructure.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using Stripe.Checkout;
 using System.Security.Claims;
 using Utility;
 
@@ -92,7 +93,61 @@ namespace CBTDWeb.Pages.Cart
 
 			_unitOfWork.ShoppingCart.Delete(ShoppingCartVM.cartItems);
 			_unitOfWork.Commit();
-			return RedirectToPage("OrderConfirmation", new { orderId = ShoppingCartVM.OrderHeader.Id });
+
+			//stripe settings 
+			var domain = "https://localhost:7156/";
+			var options = new SessionCreateOptions
+			{
+				PaymentMethodTypes = new List<string>
+				{
+				  "card",
+				},
+				LineItems = new List<SessionLineItemOptions>(),
+				Mode = "payment",
+				SuccessUrl = domain + $"Cart/OrderConfirmation?Orderid={ShoppingCartVM.OrderHeader.Id}",
+				CancelUrl = domain + $"Cart/Index",
+			};
+
+			foreach (var item in ShoppingCartVM.cartItems)
+			{
+
+				var sessionLineItem = new SessionLineItemOptions
+				{
+					PriceData = new SessionLineItemPriceDataOptions
+					{
+						UnitAmount = (long)(item.CartPrice * 100),//20.00 -> 2000
+						Currency = "usd",
+
+						ProductData = new SessionLineItemPriceDataProductDataOptions
+						{
+							Name = item.Product.Name
+
+						},
+
+					},
+					Quantity = item.Count,
+
+
+
+				};
+
+				options.LineItems.Add(sessionLineItem);
+
+			}
+
+			var service = new SessionService();
+			Session session = service.Create(options);
+
+			//grab the URL from the session
+			Response.Headers.Add("Location", session.Url);
+			//return a redirect to the original session location
+			_unitOfWork.OrderHeader.UpdateStripePaymentID(ShoppingCartVM.OrderHeader.Id, session.Id, session.PaymentLinkId);
+			_unitOfWork.Commit();
+
+			return new StatusCodeResult(303);  //success URL
+
+
+			//return RedirectToPage("OrderConfirmation", new { orderId = ShoppingCartVM.OrderHeader.Id });
 		}
 	}
 

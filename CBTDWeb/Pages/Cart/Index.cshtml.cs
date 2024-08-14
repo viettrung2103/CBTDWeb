@@ -101,10 +101,5 @@ namespace CBTDWeb.Pages.Cart
             return RedirectToPage();
         }
 
-
-
-        //public void OnGet()
-        //{
-        //}
     }
 }

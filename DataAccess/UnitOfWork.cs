@@ -18,7 +18,8 @@ public class UnitOfWork : IUnitOfWork
     private IGenericRepository<Manufacturer> _Manufacturer;
     private IGenericRepository<Product> _Product;
     private IGenericRepository<ApplicationUser> _ApplicationUser;
-    private IGenericRepository<ShoppingCart> _ShoppingCart;
+    //private IGenericRepository<ShoppingCart> _ShoppingCart;
+    private IShoppingCartRepository<ShoppingCart> _ShoppingCart;
     private IGenericRepository<OrderDetails> _OrderDetails;
 
     private IOrderHeaderRepository<OrderHeader> _OrderHeader;
@@ -79,21 +80,21 @@ public class UnitOfWork : IUnitOfWork
         }
     }
 
-    public IGenericRepository<ShoppingCart> ShoppingCart
-    {
-        get
-        {
 
-            if (_ShoppingCart == null)
-            {
-                _ShoppingCart = new GenericRepository<ShoppingCart>(_dbContext);
-            }
 
-            return _ShoppingCart;
-        }
-    }
+	public IShoppingCartRepository<ShoppingCart> ShoppingCart
+	{
+		get
+		{
+			if (_ShoppingCart== null)
+			{
+				_ShoppingCart= new ShoppingCartRepository(_dbContext);
+			}
+			return _ShoppingCart;
+		}
+	}
 
-    public IGenericRepository<OrderDetails> OrderDetails
+	public IGenericRepository<OrderDetails> OrderDetails
     {
         get
         {
@@ -111,12 +112,10 @@ public class UnitOfWork : IUnitOfWork
     {
         get
         {
-
             if (_OrderHeader == null)
             {
                 _OrderHeader = new OrderHeaderRepository(_dbContext);
             }
-
             return _OrderHeader;
         }
     }
